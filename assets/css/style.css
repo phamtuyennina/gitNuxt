@@ -144,3 +144,12 @@ div.container_content h3{
     font-size: 16px;
     font-family: msb;
 }
+div.container_content a{
+    display: inline-block !important;
+}
+div.container_content ul{
+    list-style: disc !important;
+}
+div.container_content ol{
+    list-style: decimal !important;
+}

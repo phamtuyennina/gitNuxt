@@ -74,20 +74,21 @@ import { ref, computed } from 'vue'
             ** Chỉ trả về markdown json, ko cần thêm câu chào khác
             \`\`\`
         `
-        const messages = [{ role: "user", content: Prompt }]
-        const { data, error } = await useFetch('https://phamtuyennina-github-io.vercel.app/api/chat', {
+        const { data, error } = await useFetch('https://phamtuyennina-github-io.vercel.app/api/create-outline', {
             method: 'POST',
-            body: JSON.stringify({ messages }),
+            body: JSON.stringify({ length: form.value.content_length, keyword: form.value.content_keyword, title: form.value.content_title}),
             headers: { 'Content-Type': 'application/json' }
         })
         if (error.value) {
             console.error('Lỗi:', error.value)
         } else {
-            const text = data.value 
+            const text = data.value.content
+            console.log(data.value)
             const match = text?.match(/```json\n([\s\S]*?)\n```/) 
             if (match && match[1]) {
                 const jsonData = JSON.parse(match[1])
                 websiteStore.AddJsonData(jsonData)
+                websiteStore.setTokenTotal(data.value.totalTokenCount)
                 navigateTo('/article-outline');
             } else {
                 console.error('Không tìm thấy JSON hợp lệ trong phản hồi API')

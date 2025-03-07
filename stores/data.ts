@@ -5,7 +5,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
         content_length:'800 - 1000',
         content_keyword:'',
         content_title:'',
-
+        tokenTotal:0,
     }),
     actions: {
         setContentLenght(length: string) {
@@ -22,6 +22,9 @@ export const useWebsiteStore = defineStore('websiteStore', {
         },
         AddContentData(data: any) {
             this.content = data
+        },
+        setTokenTotal(tokenTotal: number) {
+            this.tokenTotal+= tokenTotal
         }
     },
     getters: {

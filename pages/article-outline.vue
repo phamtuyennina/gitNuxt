@@ -88,8 +88,9 @@
             </div>
             <div class="col-span-2">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header flex items-center justify-between">
                         <p class="!mb-0 py-[10px]"><b>Nội dung bài viết</b></p>
+                        <p class="!mb-0 py-[10px]"><b>Token đã sử dụng: {{ websiteStore.tokenTotal }}</b></p>
                     </div>
                     <div class="card-body">
                         <div ></div>
@@ -175,8 +176,6 @@
             displayedContent.value += text.charAt(index);
             index++;
             await nextTick();
-            console.log(contentRef.value.scrollHeight)
-            console.log(document.documentElement.clientHeight)
             if (contentRef.value && contentRef.value.scrollHeight+300 > document.documentElement.clientHeight) {
                 window.scrollTo({ top: contentRef.value.scrollHeight, left: 0, behavior: 'smooth' });
             }
@@ -197,21 +196,23 @@
             4. Phong cách viết: ${form.value.content_style}
             5. Dàn ý bàn viết theo cấu trúc mardown sau đây:
             ${markdown} \n\n
+            6. In đậm từ khóa mục tiêu trong nội dung
             ${form.value.content_note}
             *Lưu ý: chỉ trả về nội dung bài blog, không cần thêm câu chào hay hướng dẫn.
             \`\`\`
         `
         const messages = [{ role: "user", content: PromptDefault }]
-        const { data, error } = await useFetch('https://phamtuyennina-github-io.vercel.app/api/chat', {
+        const { data, error } = await useFetch('https://phamtuyennina-github-io.vercel.app/api/create-content', {
             method: 'POST',
-            body: JSON.stringify({ messages }),
+            body: JSON.stringify({ length: form.value.content_length, keyword: form.value.content_keyword, title: form.value.content_title, style: form.value.content_style, note: form.value.content_note, outline: markdown}),
             headers: { 'Content-Type': 'application/json' }
         })
         if (error.value) {
             console.error('Lỗi:', error.value)
         } else {
             loadingStore.setLoading(false)
-            fullContent.value = marked(data.value)
+            websiteStore.setTokenTotal(data.value.totalTokenCount)
+            fullContent.value = marked(data.value.content)
             typeEffect(fullContent.value)
         }
     }

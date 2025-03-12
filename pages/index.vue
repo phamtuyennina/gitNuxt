@@ -76,7 +76,7 @@ import { ref, computed } from 'vue'
         `
         const { data, error } = await useFetch('https://ai.nina.vn/api/create-outline', {
             method: 'POST',
-            body: JSON.stringify({ length: form.value.content_length, keyword: form.value.content_keyword, title: form.value.content_title}),
+            body: JSON.stringify({ length: form.value.content_length, keyword: form.value.content_keyword, title: form.value.content_title,apikey:'AIzaSyB4kLITJTufjRUTjqt2OsxZnwDLdkY31Pg'}),
             headers: { 'Content-Type': 'application/json' }
         })
         if (error.value) {

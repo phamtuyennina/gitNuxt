@@ -202,7 +202,7 @@
             \`\`\`
         `
         const messages = [{ role: "user", content: PromptDefault }]
-        const { data, error } = await useFetch('https://phamtuyennina-github-io.vercel.app/api/create-content', {
+        const { data, error } = await useFetch('http://210.2.87.10:9000/api/create-content', {
             method: 'POST',
             body: JSON.stringify({ length: form.value.content_length, keyword: form.value.content_keyword, title: form.value.content_title, style: form.value.content_style, note: form.value.content_note, outline: markdown}),
             headers: { 'Content-Type': 'application/json' }

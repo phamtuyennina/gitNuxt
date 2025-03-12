@@ -74,7 +74,7 @@ import { ref, computed } from 'vue'
             ** Chỉ trả về markdown json, ko cần thêm câu chào khác
             \`\`\`
         `
-        const { data, error } = await useFetch('https://phamtuyennina-github-io.vercel.app/api/create-outline', {
+        const { data, error } = await useFetch('http://210.2.87.10:9000/api/create-outline', {
             method: 'POST',
             body: JSON.stringify({ length: form.value.content_length, keyword: form.value.content_keyword, title: form.value.content_title}),
             headers: { 'Content-Type': 'application/json' }
